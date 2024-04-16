@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import axios from "axios";
-import "./AddRate.css";
 
 function AddComplaint() {
   const navigate = useNavigate();
@@ -53,9 +52,12 @@ function AddComplaint() {
       <div>
         <div className="rate-full-box">
           <div>
-            <h1 className="rate-topic">
+
+            <h1 className="rate_topic">
               Add <span className="rate-us">Complaint</span>{" "}
             </h1>
+            <br></br>
+            <button onClick={()=>(window.location.href='/validatedDetails')} className="add_rate">My Complaint</button>
             <form onSubmit={handleSubmit} className="rate-full-box-form">
               <label className="rate-full-box-label">Username</label>
               <input
@@ -86,7 +88,7 @@ function AddComplaint() {
                 required
               />
               <br />
-              <button type="submit" className="rate-add-btn">
+              <button type="submit" className="centerbtn_rate">
                 Add Complaint
               </button>
             </form>

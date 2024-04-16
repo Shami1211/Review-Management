@@ -8,16 +8,16 @@ const getAllComplaints = async (req, res, next) => {
     console.log(err);
     return res.status(500).json({ message: "Internal Server Error" });
   }
-  
+
   if (!complaints || complaints.length === 0) {
     return res.status(404).json({ message: "Complaints not found" });
   }
-  
+
   return res.status(200).json({ complaints });
 };
 
 const addComplaint = async (req, res, next) => {
-  const { username, email, complaint } = req.body;
+  const { username, email, complaint,reply } = req.body;
 
   // Check if complaint field is provided
   if (!complaint) {
@@ -27,7 +27,7 @@ const addComplaint = async (req, res, next) => {
   let newComplaint;
 
   try {
-    newComplaint = new Complaint({ username, email, complaint });
+    newComplaint = new Complaint({ username, email,reply });
     await newComplaint.save();
   } catch (err) {
     console.log(err);
@@ -57,25 +57,26 @@ const getComplaintById = async (req, res, next) => {
 
 const updateComplaint = async (req, res, next) => {
   const id = req.params.id;
-  const { username, email, complaint } = req.body;
-  let updatedComplaint;
+  const { username, email, complaint,reply } = req.body;
+  let complaints;
 
   try {
-    updatedComplaint = await Complaint.findByIdAndUpdate(id, {
+    complaints = await Complaint.findByIdAndUpdate(id, {
       username,
       email,
-      complaint
+      complaint,
+      reply,
     });
   } catch (err) {
     console.log(err);
     return res.status(500).json({ message: "Internal Server Error" });
   }
 
-  if (!updatedComplaint) {
+  if (!complaints) {
     return res.status(404).json({ message: "Complaint not found" });
   }
 
-  return res.status(200).json({ updatedComplaint });
+  return res.status(200).json({ complaints });
 };
 
 const deleteComplaint = async (req, res, next) => {

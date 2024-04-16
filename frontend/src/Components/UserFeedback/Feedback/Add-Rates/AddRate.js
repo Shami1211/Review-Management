@@ -31,7 +31,12 @@ function AddRate() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!inputs.rating || !inputs.comment || !inputs.username || !inputs.email) {
+    if (
+      !inputs.rating ||
+      !inputs.comment ||
+      !inputs.username ||
+      !inputs.email
+    ) {
       alert("Please provide all required information.");
       return;
     }
@@ -58,12 +63,13 @@ function AddRate() {
     <div>
       <div>
         <div className="rate-full-box">
-          <div>
-            <h1 className="rate-topic">
+          <div className="">
+            <h1 className="rate_topic">
               Add <span className="rate-us">Rate</span>{" "}
             </h1>
             <form onSubmit={handleSubmit} className="rate-full-box-form">
               <label className="rate-full-box-label">Username</label>
+              <br></br>
               <input
                 type="text"
                 name="username"
@@ -74,6 +80,7 @@ function AddRate() {
               />
               <br />
               <label className="rate-full-box-label">Email</label>
+              <br></br>
               <input
                 type="email"
                 name="email"
@@ -84,6 +91,7 @@ function AddRate() {
               />
               <br />
               <label className="rate-full-box-label">Rating</label>
+              <br></br>
               <Rating
                 name="rating"
                 size="large"
@@ -95,6 +103,7 @@ function AddRate() {
               />
               <br />
               <label className="rate-full-box-label">Comment</label>
+              <br></br>
               <textarea
                 className="rate-full-box-input rate-text"
                 name="comment"
@@ -103,7 +112,7 @@ function AddRate() {
                 required
               />
               <br />
-              <button type="submit" className="rate-add-btn">
+              <button type="submit" className="centerbtn_rate">
                 Add Rate
               </button>
             </form>

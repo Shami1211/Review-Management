@@ -15,6 +15,9 @@ const ComplaintSchema = new Schema({
     type: String,
     required: true,
   },
+  reply: {
+    type: String,
+  },
 });
 
 module.exports = mongoose.model("Complaint", ComplaintSchema);

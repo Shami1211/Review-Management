@@ -1,21 +1,27 @@
-import React from 'react'
+import React from "react";
 
 export default function Home() {
   return (
-    <div>Home
+    <div className="select_boxset">
+      <div
+        className="select_box"
+        onClick={() => (window.location.href = "/ratedetails")}
+      >
+        <h1>Rates</h1>
+      </div>
 
-    <div onClick={() => (window.location.href = "/ratedetails")}>
-    <h1>View Rates</h1>
-     </div>
-
-
-     <div onClick={() => (window.location.href = "/complaints")}>
-    <h1>View Complaints</h1>
-     </div>
-
-
-
-
-  </div>
-  )
+      <div
+        className="select_box"
+        onClick={() => (window.location.href = "/add-complaint")}
+      >
+        <h1>Complaints</h1>
+      </div>
+      <div
+        className="select_box"
+        onClick={() => (window.location.href = "/admindash")}
+      >
+        <h1>Admin</h1>
+      </div>
+    </div>
+  );
 }
