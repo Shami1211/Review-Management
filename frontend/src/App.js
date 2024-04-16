@@ -1,11 +1,11 @@
 import React from "react";
 import { Route, Routes } from "react-router";
 
-import AddRate from "./Components/Feedback/Add-Rates/AddRate";
-import RateDetails from "./Components/Feedback/Rate/RateDetails";
+import AddRate from "./Components/UserFeedback/Feedback/Add-Rates/AddRate";
+import RateDetails from "./Components/UserFeedback/Feedback/Rate/RateDetails";
 
 import AddComplaint from "./Components/UserFeedback/Complaints/Add-Complaint/AddComplaint";
-import ComplaintDetails from "./Components/Complaints/Complaints/ComplaintDetails";
+import ComplaintDetails from "./Components/UserFeedback/Complaints/Complaints/ComplaintDetails";
 
 
 function App() {

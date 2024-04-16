@@ -112,7 +112,7 @@ const RateDetails = () => {
           <div className="lin"></div>
           <button
             className="add_rate"
-            onClick={() => (window.location.href = "./addrate")}
+            onClick={() => (window.location.href = "./add-feedback")}
           >
             Add Rate
           </button>

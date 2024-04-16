@@ -1,27 +1,17 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import axios from "axios";
-import Rating from "@mui/material/Rating";
-import StarIcon from "@mui/icons-material/Star";
 import "./AddRate.css";
 
-function AddRate() {
+function AddComplaint() {
   const navigate = useNavigate();
   const [inputs, setInputs] = useState({
     username: "",
     email: "",
-    rating: null,
-    comment: "",
+    complaint: "",
   });
 
-  const handleChange = (event, newValue) => {
-    setInputs((prevState) => ({
-      ...prevState,
-      rating: newValue,
-    }));
-  };
-
-  const handleCommentChange = (event) => {
+  const handleInputChange = (event) => {
     const { name, value } = event.target;
     setInputs((prevState) => ({
       ...prevState,
@@ -31,27 +21,31 @@ function AddRate() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!inputs.rating || !inputs.comment || !inputs.username || !inputs.email) {
+    if (!inputs.username || !inputs.email || !inputs.complaint) {
       alert("Please provide all required information.");
       return;
     }
-    console.log(inputs);
-    await sendRequest();
-    showAlert();
-    navigate("/ratedetails");
+
+    try {
+      await sendRequest();
+      showAlert();
+      navigate("/complaints");
+    } catch (error) {
+      console.error("Error adding complaint:", error);
+      alert("Failed to add complaint. Please try again.");
+    }
   };
 
   const sendRequest = async () => {
-    await axios.post("http://localhost:8080/rates", {
+    await axios.post("http://localhost:8080/complaints", {
       username: inputs.username,
       email: inputs.email,
-      rates: inputs.rating,
-      comment: inputs.comment,
+      complaint: inputs.complaint,
     });
   };
 
   const showAlert = () => {
-    alert("Rate added successfully!");
+    alert("Complaint added successfully!");
   };
 
   return (
@@ -60,7 +54,7 @@ function AddRate() {
         <div className="rate-full-box">
           <div>
             <h1 className="rate-topic">
-              Add <span className="rate-us">Rate</span>{" "}
+              Add <span className="rate-us">Complaint</span>{" "}
             </h1>
             <form onSubmit={handleSubmit} className="rate-full-box-form">
               <label className="rate-full-box-label">Username</label>
@@ -68,7 +62,7 @@ function AddRate() {
                 type="text"
                 name="username"
                 value={inputs.username}
-                onChange={handleCommentChange}
+                onChange={handleInputChange}
                 className="rate-full-box-input"
                 required
               />
@@ -78,33 +72,22 @@ function AddRate() {
                 type="email"
                 name="email"
                 value={inputs.email}
-                onChange={handleCommentChange}
+                onChange={handleInputChange}
                 className="rate-full-box-input"
                 required
               />
               <br />
-              <label className="rate-full-box-label">Rating</label>
-              <Rating
-                name="rating"
-                size="large"
-                value={inputs.rating}
-                onChange={handleChange}
-                precision={1}
-                icon={<StarIcon fontSize="inherit" />}
-                required
-              />
-              <br />
-              <label className="rate-full-box-label">Comment</label>
+              <label className="rate-full-box-label">Complaint</label>
               <textarea
                 className="rate-full-box-input rate-text"
-                name="comment"
-                value={inputs.comment}
-                onChange={handleCommentChange}
+                name="complaint"
+                value={inputs.complaint}
+                onChange={handleInputChange}
                 required
               />
               <br />
               <button type="submit" className="rate-add-btn">
-                Add Rate
+                Add Complaint
               </button>
             </form>
           </div>
@@ -114,4 +97,4 @@ function AddRate() {
   );
 }
 
-export default AddRate;
+export default AddComplaint;
