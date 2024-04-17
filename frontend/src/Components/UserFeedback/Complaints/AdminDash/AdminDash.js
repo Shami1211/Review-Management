@@ -2,20 +2,31 @@ import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import "../Complaints/Rate.css";
 import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
 import { useReactToPrint } from "react-to-print";
-const URL = "http://localhost:8080/complaints";
+import Rating from "@mui/material/Rating";
+import StarIcon from "@mui/icons-material/Star";
 
-const fetchHandler = async () => {
-  return await axios.get(URL).then((res) => res.data);
+const complaintsURL = "http://localhost:8080/complaints";
+const ratesURL = "http://localhost:8080/rates";
+
+const fetchComplaints = async () => {
+  return await axios.get(complaintsURL).then((res) => res.data);
 };
+
+const fetchRates = async () => {
+  return await axios.get(ratesURL).then((res) => res.data);
+};
+
 function AdminDash() {
-  //fetch data
+  // Fetch complaints and rates data
   const [complaints, setComplaints] = useState([]);
+  const [rates, setRates] = useState([]);
 
   useEffect(() => {
-    fetchHandler().then((data) => setComplaints(data.complaints));
+    fetchComplaints().then((data) => setComplaints(data.complaints));
+    fetchRates().then((data) => setRates(data.rate));
   }, []);
+
   /*PDF Function */
   const ComponentsRef = useRef();
   const handlePrint = useReactToPrint({
@@ -29,7 +40,7 @@ function AdminDash() {
   const [noResults, setNoResults] = useState(false);
 
   const handleSearch = () => {
-    fetchHandler().then((data) => {
+    fetchComplaints().then((data) => {
       const filtered = data.complaints.filter((complaints) =>
         Object.values(complaints).some((field) =>
           field.toString().toLowerCase().includes(searchQuery.toLowerCase())
@@ -65,6 +76,7 @@ function AdminDash() {
         </tr>
       </div>
       <div className="tbl_con_admin" ref={ComponentsRef}>
+        {/* Complaints Table */}
         <h1 className="rate_topic">
           Complaints<span className="sub_topic_inventory"> Details</span>{" "}
         </h1>
@@ -107,6 +119,43 @@ function AdminDash() {
               ))}
             </tbody>
           )}
+        </table>
+      </div>
+
+      {/* Rates Table */}
+      <div className="tbl_con_admin" ref={ComponentsRef}>
+        <h1 className="rate_topic">
+          Rate<span className="sub_topic_inventory"> Details</span>{" "}
+        </h1>
+        <br></br>
+        <table className="table_details_admin">
+          <thead>
+            <tr className="admin_tbl_tr">
+              <th className="admin_tbl_th">User Name</th>
+              <th className="admin_tbl_th">Rating</th>
+              <th className="admin_tbl_th">Comment</th>
+             
+            </tr>
+          </thead>
+          <tbody>
+            {rates.map((rate, index) => (
+              <tr className="admin_tbl_tr" key={index}>
+                <td className="admin_tbl_td">{rate.username}</td>
+                <td className="admin_tbl_td">
+                  {/* Display Rating as Stars */}
+                  <Rating
+                    name={`rating-${index}`}
+                    value={parseFloat(rate.rates)} // Convert to number if necessary
+                    precision={0.5} // Precision for half-star ratings
+                    readOnly
+                    icon={<StarIcon className="rate_star" fontSize="inherit" />}
+                  />
+                </td>
+                <td className="admin_tbl_td">{rate.comment}</td>
+                
+              </tr>
+            ))}
+          </tbody>
         </table>
       </div>
     </div>
