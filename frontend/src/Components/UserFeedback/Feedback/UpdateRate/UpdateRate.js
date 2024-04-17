@@ -64,11 +64,19 @@ function UpdateRate() {
       stars.push(
         <StarIcon
           key={i}
-          style={{ color: i <= inputs.rates ? "#ffc107" : "#e4e5e9" }}
+          style={{ color: i <= inputs.rates ? "#ffc107" : "#e4e5e9", cursor: "pointer" }}
+          onClick={() => handleRateClick(i)}
         />
       );
     }
     return stars;
+  };
+
+  const handleRateClick = (rateValue) => {
+    setInputs((prevState) => ({
+      ...prevState,
+      rates: rateValue,
+    }));
   };
 
   return (
